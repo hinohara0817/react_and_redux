@@ -5,8 +5,8 @@ function App() {
   const profiles = [
     {name: "Taro"},
     {name: "Haneko"},
-    {name: 10},
-    {},
+    //name: 10},
+    //{},
   ]
   return (
     <div>
@@ -20,6 +20,7 @@ function App() {
     </div>
   );
 }
+
 
 //関数コンポーネント
 const Cat = (props) =>{
