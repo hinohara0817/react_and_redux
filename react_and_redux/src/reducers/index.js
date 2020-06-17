@@ -1,7 +1,7 @@
 // アプリケーションの事実上の状態を持つ
 
 import {combineReducers} from 'redux'
-import count from './count'
+import event from './event'
 
 //結合
-export default combineReducers({count})
+export default combineReducers({event})

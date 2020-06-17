@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
-import {increment, decrement} from '../actions'
+import{ readEvents } from '../actions'
+//import {increment, decrement} from '../actions'
+
 
 //const App = () => (<Counter></Counter>)
   /*
@@ -16,7 +18,10 @@ import {increment, decrement} from '../actions'
   //
 
 //クラスコンポーネント
-class App extends Component {
+class EventsIndex extends Component {
+  componentDidMount(){
+    this.props.readEvents()
+  }
   // State コンポーネントの状態を持つ（可変
   //初期化処理
   /* reducerで行うので不要
@@ -47,11 +52,14 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({value: state.count.value})
+const mapStateToProps = state => ({})
+const mapDispatchToProps = ({ readEvents })
+/*
 const mapDispatchToProps = dispatch => ({
   increment: () => dispatch(increment()),
   decrement: () => dispatch(decrement())
 })
+*/
 //関数コンポーネント
 /*const Cat = (props) =>{
   props 親から子に値を渡す時に使う(普遍)
@@ -66,5 +74,5 @@ Cat.defaultProps = {
   name: "Noname"
 }
 */
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex)
 
