@@ -1,102 +1,74 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
-//import PropTypes from 'prop-types';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
 
-import{ readEvents } from '../actions'
-//import {increment, decrement} from '../actions'
+import { readEvents } from '../actions'
 
-
-//const App = () => (<Counter></Counter>)
-  /*
-  const profiles = [
-    {name: "Taro"},
-    {name: "Haneko"},
-    //name: 10},
-    //{},
-  ]
-  */
-  //
-
-//クラスコンポーネント
 class EventsIndex extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.readEvents()
   }
-  // State コンポーネントの状態を持つ（可変
-  //初期化処理
-  /* reducerで行うので不要
-  constructor(props){
-    super(props)
-    this.state = {count: 0}
-  }
-  */
-  //メソッド
-  /* action ceater使うので不要
-  handlePlusButton = () => {
-    //Stateの変更
-    this.setState({count: this.state.count + 1})
-  }
-  handleMinusButton = () =>{
-    this.setState({count: this.state.count - 1})
-  }
-  */
-  renderEvents(){
+
+  renderEvents() {
     return _.map(this.props.events, event => (
-      <tr key={event.id}>
-        <td>{event.id}</td>
-        <td>
+      <TableRow key={event.id}>
+        <TableRowColumn>{event.id}</TableRowColumn>
+        <TableRowColumn>
           <Link to={`/events/${event.id}`}>
             {event.title}
           </Link>
-        </td>
-        <td>{event.body}</td>
-      </tr>
+        </TableRowColumn>
+        <TableRowColumn>{event.body}</TableRowColumn>
+      </TableRow>
     ))
   }
-  render(){
-    return(
+
+  render() {
+    const style = {
+      position: "fixed",
+      right: 12,
+      bottom: 12
+    }
+    return (
       <React.Fragment>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Body</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.renderEvents()}
-        </tbody>
-      </table>
-      <Link to="/events/new">New Event</Link>
+        <FloatingActionButton style={style} containerElement={<Link to="/events/new" />}>
+          <ContentAdd />
+        </FloatingActionButton>
+
+        <Table>
+          <TableHeader
+            displaySelectAll={false}
+            adjustForCheckbox={false}
+          >
+            <TableRow>
+              <TableHeaderColumn>ID</TableHeaderColumn>
+              <TableHeaderColumn>Title</TableHeaderColumn>
+              <TableHeaderColumn>Body</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody displayRowCheckbox={false}>
+            {this.renderEvents()}
+          </TableBody>
+        </Table>
       </React.Fragment>
     )
   }
 }
 
-const mapStateToProps = state => ({events: state.events})
+const mapStateToProps = state => ({ events: state.events })
+
 const mapDispatchToProps = ({ readEvents })
-/*
-const mapDispatchToProps = dispatch => ({
-  increment: () => dispatch(increment()),
-  decrement: () => dispatch(decrement())
-})
-*/
-//関数コンポーネント
-/*const Cat = (props) =>{
-  props 親から子に値を渡す時に使う(普遍)
-  return <div>Meow. I am {props.name}.</div>
-}
 
-Cat.propTypes = {
-  name: PropTypes.string.isRequired
-}
-
-Cat.defaultProps = {
-  name: "Noname"
-}
-*/
 export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex)
-
